@@ -33,7 +33,6 @@ export default class HelloWorldSceneAR extends Component {
   }
 
   render() {
-    // 猜测使用右手坐标系  因为人面对的是 -z 方向,  右手边是 x 的正方向  左手边 x 福相
     return (
 			<ViroARScene onTrackingUpdated={this._onInitialized}>
 				<ViroNode

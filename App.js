@@ -22,6 +22,13 @@ import {
   ViroARSceneNavigator
 } from 'react-viro';
 
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+import App from "./js/app";
+var reducers = require("./js/redux/reducers");
+
+let store = createStore(reducers);
+
 /*
  TODO: Insert your API key below
  */
@@ -31,11 +38,12 @@ var sharedProps = {
 
 // Sets the default scene you want for AR and VR
 var InitialARScene = require('./js/HelloWorldSceneAR');
-var InitialVRScene = require('./js/HelloWorldScene');
+var InitialVRScene = require('./js/HelloWorldSceneVR');
 
 var UNSET = "UNSET";
 var VR_NAVIGATOR_TYPE = "VR";
 var AR_NAVIGATOR_TYPE = "AR";
+var FIGMENT_TYPE = "FIGMENT";
 
 // This determines which type of experience to launch in, or UNSET, if the user should
 // be presented with a choice of AR or VR. By default, we offer the user a choice.
@@ -60,40 +68,51 @@ export default class ViroSample extends Component {
   // if you are building a specific type of experience.
   render() {
     if (this.state.navigatorType == UNSET) {
-      return this._getExperienceSelector();
-    } else if (this.state.navigatorType == VR_NAVIGATOR_TYPE) {
-      return this._getVRNavigator();
-    } else if (this.state.navigatorType == AR_NAVIGATOR_TYPE) {
-      return this._getARNavigator();
-    }
+			return this._getExperienceSelector();
+		} else if (this.state.navigatorType == VR_NAVIGATOR_TYPE) {
+			return this._getVRNavigator();
+		} else if (this.state.navigatorType == AR_NAVIGATOR_TYPE) {
+			return this._getARNavigator();
+		} else if (this.state.navigatorType == FIGMENT_TYPE) {
+			return this._getFigmentNavigator();
+		}
   }
 
   // Presents the user with a choice of an AR or VR experience
   _getExperienceSelector() {
     return (
-      <View style={localStyles.outer} >
-        <View style={localStyles.inner} >
+			<View style={localStyles.outer}>
+				<View style={localStyles.inner}>
+					<Text style={localStyles.titleText}>
+						Choose your desired experience:
+					</Text>
 
-          <Text style={localStyles.titleText}>
-            Choose your desired experience:
-          </Text>
+					<TouchableHighlight
+						style={localStyles.buttons}
+						onPress={this._getExperienceButtonOnPress(AR_NAVIGATOR_TYPE)}
+						underlayColor={"#68a0ff"}
+					>
+						<Text style={localStyles.buttonText}>AR</Text>
+					</TouchableHighlight>
 
-          <TouchableHighlight style={localStyles.buttons}
-            onPress={this._getExperienceButtonOnPress(AR_NAVIGATOR_TYPE)}
-            underlayColor={'#68a0ff'} >
+					<TouchableHighlight
+						style={localStyles.buttons}
+						onPress={this._getExperienceButtonOnPress(VR_NAVIGATOR_TYPE)}
+						underlayColor={"#68a0ff"}
+					>
+						<Text style={localStyles.buttonText}>VR</Text>
+					</TouchableHighlight>
 
-            <Text style={localStyles.buttonText}>AR</Text>
-          </TouchableHighlight>
-
-          <TouchableHighlight style={localStyles.buttons}
-            onPress={this._getExperienceButtonOnPress(VR_NAVIGATOR_TYPE)}
-            underlayColor={'#68a0ff'} >
-
-            <Text style={localStyles.buttonText}>VR</Text>
-          </TouchableHighlight>
-        </View>
-      </View>
-    );
+					<TouchableHighlight
+						style={localStyles.buttons}
+						onPress={this._getExperienceButtonOnPress(FIGMENT_TYPE)}
+						underlayColor={"#68a0ff"}
+					>
+						<Text style={localStyles.buttonText}>Figment</Text>
+					</TouchableHighlight>
+				</View>
+			</View>
+		);
   }
 
   // Returns the ViroARSceneNavigator which will start the AR experience
@@ -103,13 +122,21 @@ export default class ViroSample extends Component {
         initialScene={{scene: InitialARScene}} />
     );
   }
-  
+
   // Returns the ViroSceneNavigator which will start the VR experience
   _getVRNavigator() {
     return (
       <ViroVRSceneNavigator {...this.state.sharedProps}
         initialScene={{scene: InitialVRScene}} onExitViro={this._exitViro}/>
     );
+  }
+
+  _getFigmentNavigator() {
+    return (
+			<Provider store={store}>
+				<App />
+			</Provider>
+		);
   }
 
   // This function returns an anonymous/lambda function to be used

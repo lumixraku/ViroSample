@@ -10,7 +10,11 @@
   "dependencies": {
     "react": "16.8.3",
     "react-native": "0.59.9",
-    "react-viro": "2.17.0"
+    "react-native-video": "4.0.1",
+    "react-redux": "5.0.5",
+    "react-timer-mixin": "^0.13.3",
+    "react-viro": "2.17.0",
+    "redux": "3.7.2"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
