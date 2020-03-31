@@ -2,7 +2,13 @@
 
 import React, { Component } from 'react';
 
-import {StyleSheet} from 'react-native';
+import {
+	Alert,
+	StyleSheet,
+	Text,
+	TouchableHighlight,
+	View
+} from "react-native";
 
 import {
 	ViroARScene,
@@ -82,7 +88,7 @@ export default class HelloWorldSceneAR extends Component {
 						require("./res/emoji_smile/emoji_smile_normal.png"),
 						require("./res/emoji_smile/emoji_smile_specular.png")
 					]}
-					position={[-0.5, 0.5, -1]}
+					position={[0, 0, -1]}
 					scale={[0.2, 0.2, 0.2]}
 					type="VRX"
 				/>
@@ -91,12 +97,21 @@ export default class HelloWorldSceneAR extends Component {
   }
 
   _onInitialized(state, reason) {
+
+
     if (state == ViroConstants.TRACKING_NORMAL) {
+
+	// Alert.alert("Alert Title", null, [
+	// 	{ text: "Foo", onPress: () => console.log("Foo Pressed!") },
+	// 	{ text: "Bar", onPress: () => console.log("Bar Pressed!") },
+	// 	{ text: "Baz", onPress: () => console.log("Baz Pressed!") }
+	// ]);
+
       this.setState({
-        text : "Hello World!"
+        text : "Wow!"
       });
     } else if (state == ViroConstants.TRACKING_NONE) {
-      // Handle loss of tracking
+	  // Handle loss of tracking
     }
   }
 }
