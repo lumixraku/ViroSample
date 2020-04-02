@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <script src="./index.js"></script>
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    window.GLOBAL_VAR = {}
+  </script>
+  <script src="./dist/vconsole.min.js"></script>
+  <script>
+    new VConsole();
+  </script>
+  <div id="info"></div>
+
+  <script>
+    setInterval(function(){
+      console.log(window.GLOBAL_VAR)
+    }, 1000)
+    // window.postMessage("jajajajajja")
+
+  </script>
+</body>
+</html>
