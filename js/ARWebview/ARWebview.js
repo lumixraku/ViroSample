@@ -25,11 +25,12 @@ import {
 	ViroARSceneNavigator
 } from "react-viro";
 
-
 import  InitialARScene from "./HelloSceneAR";
 
-
-
+import { Dimensions } from "react-native";
+var stageWidth = Dimensions.get('window').width; //full width
+var stageHeight = Dimensions.get('window').height; //full height
+var absViewHeight = 650
 export default class ARWebview extends Component {
 	constructor() {
 		super();
@@ -40,7 +41,6 @@ export default class ARWebview extends Component {
 		};
 
 		// bind 'this' to functions
-		this._onInitialized = this._onInitialized.bind(this);
 		console.log("this rootview..", this.refs["rootView"])
 	}
 
@@ -49,49 +49,30 @@ export default class ARWebview extends Component {
 	render() {
 		return (
 			<View ref="rootView" style={styles.outer}>
-				<View
-					style={{
-						alignSelf: "stretch",
-						height: 550,
-						backgroundColor: "powderblue"
-					}}
-				>
+				<View style={styles.bgView}></View>
 
-
+				<View style={styles.absView}>
 					<WebView
 						style={styles.webview}
 						source={{
-							uri: "https://facehehe.com/"
+							uri: "https://google.com/"
 						}}
 					/>
+
 				</View>
-				{/* <WebView style={styles.webview} source={{ uri: "https://reactnative.dev/" }} /> */}
 				{/* <ViroARSceneNavigator
+					style={styles.bgView}
 					initialScene={{ scene: InitialARScene }}
-				></ViroARSceneNavigator>
+				></ViroARSceneNavigator> */}
+
+
+				{/* <WebView style={styles.webview} source={{ uri: "https://reactnative.dev/" }} /> */}
+				{/*
 				 */}
 			</View>
 		);
 	}
 
-	_onInitialized(state, reason) {
-
-		if (state == ViroConstants.TRACKING_NORMAL) {
-			// Alert.alert("Alert Title", null, [
-			// 	{ text: "Foo", onPress: () => console.log("Foo Pressed!") },
-			// 	{ text: "Bar", onPress: () => console.log("Bar Pressed!") },
-			// 	{ text: "Baz", onPress: () => console.log("Baz Pressed!") }
-			// ]);
-			console.log("....")
-			this.setState({
-				text: "Wow!"
-			});
-		} else if (state == ViroConstants.TRACKING_NONE) {
-			// Handle loss of tracking
-		}
-
-
-	}
 }
 
 var styles = StyleSheet.create({
@@ -102,6 +83,18 @@ var styles = StyleSheet.create({
 		justifyContent: "center",
 		alignItems: "stretch"
 	},
+	absView: {
+		width: stageWidth,
+		height: absViewHeight,
+		// backgroundColor: "yellow",
+		position: "absolute",
+		top: 0
+	},
+	bgView: {
+		alignSelf: "stretch",
+		height: stageHeight,
+		backgroundColor: "powderblue"
+	},
 	helloWorldTextStyle: {
 		fontFamily: "Arial",
 		fontSize: 30,
@@ -110,9 +103,10 @@ var styles = StyleSheet.create({
 		textAlign: "center"
 	},
 	webview: {
-		height: 350,
-		alignSelf: "stretch",
-		backgroundColor: 'transparent',
+		height: absViewHeight,
+		// alignSelf: "stretch",
+		width: stageWidth,
+		backgroundColor: "transparent"
 	}
 });
 
