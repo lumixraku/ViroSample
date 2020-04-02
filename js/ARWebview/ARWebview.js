@@ -46,15 +46,23 @@ export default class ARWebview extends Component {
 
 
 		setTimeout(() => {
-			this.postToWebview();
+			this.setToWebview();
 		}, 1000);
 	}
 
 
-	postToWebview(){
+	setToWebview(){
 		var runJS = `
 			window.GLOBAL_VAR.aa = 11;
 			true;
+		`;
+		this.webref.injectJavaScript(runJS);
+
+	}
+
+	postToWebview(){
+		var runJS = `
+			window.postMessage("jajajajajja")
 		`;
 		this.webref.injectJavaScript(runJS);
 	}

@@ -6,7 +6,7 @@ function receiveMessage(event) {
 	// 这里不准确，chrome没有这个属性
 	// var origin = event.origin || event.originalEvent.origin;
 	var origin = event.origin;
-	console.log("event::::", event.data)
+	console.log("event FROM RN::::", event.data)
 
 
   if (window.ReactNativeWebView) {
