@@ -78,3 +78,11 @@ it would generate multiple apks, please use apk in ar/release
 cd android
 $ ./gradlew assembleRelease
 ```
+
+## debug
+```
+adb shell input keyevent 82
+```
+## Trouble
+https://github.com/facebook/react-native/issues/4357
+https://github.com/facebook/react-native/issues/10889

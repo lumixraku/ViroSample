@@ -20,7 +20,7 @@ import ListViewItem from './ListViewItem';
 
 /**
  * ListView wrapper that encapsulates behavior for the Listview seen at the bottom of the screen
- * in the app. 
+ * in the app.
  */
 class FigmentListView extends Component {
     constructor(props) {
@@ -81,7 +81,7 @@ class FigmentListView extends Component {
     _renderListItem(data, sectionid, rowId) {
         return (
           <View style={{marginLeft: 10}}>
-              <ListViewItem onPress={this._onListItemPressed(rowId)} 
+              <ListViewItem onPress={this._onListItemPressed(rowId)}
                     key={data.icon_img + this.props.currentSelectedEffect}
                     stateImageArray={[data.icon_img]}
                     style={styles.photo}
@@ -89,17 +89,17 @@ class FigmentListView extends Component {
                 {renderIf(data.loading == LoadingConstants.LOADING,
                     <ActivityIndicator style={{position:'absolute', marginLeft: 12, marginTop: 19, }} animating={true} size='large'/>
                 )}
-                
+
                 {renderIf(this._isSelected(data, rowId),
                   <Image source={require("../res/icon_effects_selected_pink.png")} style={styles.photoSelection} />
                 )}
-          </View>                    
+          </View>
         );
     }
 
     // Check if given rowId in the listView is selected, used to render the pink border around chosen effect
     _isSelected(data, rowId) {
-      return (this.props.listMode == UIConstants.LIST_MODE_EFFECT 
+      return (this.props.listMode == UIConstants.LIST_MODE_EFFECT
         && this.state.animationDone
         && this.state.selectedItem == rowId);
     }
@@ -113,7 +113,7 @@ class FigmentListView extends Component {
 
     _onListItemPressed(rowId) {
         let selectedItem = this.props.listMode == UIConstants.LIST_MODE_EFFECT ? rowId : this.state.selectedItem;
-        
+
         return () => {
           this.setState({
              rowChanged: parseInt(rowId),

@@ -42,6 +42,7 @@ var DrivingScene = require("./js/ARDrivingCarDemo/ARDrivingCarScene");
 var PosterScene = require("./js/ARPosterDemo/ARPosterDemo");
 var BizCardScene = require("./js/ARBusinessCard/BusinessCard");
 var PhysicsScene = require("./js/ARPhysicsSample/BasicPhysicsSample");
+var WebviewScene = require("./js/ARWebview/ARWebview");
 
 var UNSET = "UNSET";
 var VR_NAVIGATOR_TYPE = "VR";
@@ -52,7 +53,7 @@ var DRIVING_CAR_TYPE = "DRIVING"
 var BIZCARD_TYPE = "BIZCARD";
 var POSTER_TYPE = "POSTER";
 var PHYSICS_TYPE = "PHYSICS";
-
+var WEBVIEW_TYPE = "WEBVIEW"
 
 // This determines which type of experience to launch in, or UNSET, if the user should
 // be presented with a choice of AR or VR. By default, we offer the user a choice.
@@ -96,6 +97,8 @@ export default class ViroSample extends Component {
 			return this._getBizCardNavigator();
 		} else if (this.state.navigatorType == PHYSICS_TYPE) {
 			return this._getPhysicsNavigator();
+		} else if (this.state.navigatorType == WEBVIEW_TYPE) {
+			return this._getWebviewNavigator();
 		}
 
 	}
@@ -108,6 +111,14 @@ export default class ViroSample extends Component {
 					<Text style={localStyles.titleText}>
 						Choose your desired experience:
 					</Text>
+
+					<TouchableHighlight
+						style={localStyles.buttons}
+						onPress={this._getExperienceButtonOnPress(WEBVIEW_TYPE)}
+						underlayColor={"#68a0ff"}
+					>
+						<Text style={localStyles.buttonText}>webview</Text>
+					</TouchableHighlight>
 
 					<TouchableHighlight
 						style={localStyles.buttons}
@@ -141,13 +152,13 @@ export default class ViroSample extends Component {
 						<Text style={localStyles.buttonText}>Tesla!</Text>
 					</TouchableHighlight>
 
-					<TouchableHighlight
+					{/* <TouchableHighlight
 						style={localStyles.buttons}
 						onPress={this._getExperienceButtonOnPress(DRIVING_CAR_TYPE)}
 						underlayColor={"#68a0ff"}
 					>
 						<Text style={localStyles.buttonText}>DRIVING_CAR_TYPE</Text>
-					</TouchableHighlight>
+					</TouchableHighlight> */}
 
 					<TouchableHighlight
 						style={localStyles.buttons}
@@ -254,6 +265,11 @@ export default class ViroSample extends Component {
 				initialScene={{ scene: PosterScene }}
 				onExitViro={this._exitViro}
 			/>
+		);
+  }
+  _getWebviewNavigator() {
+		return (
+			<WebviewScene></WebviewScene>
 		);
   }
 
