@@ -61,7 +61,7 @@ export default class ARWebview extends Component {
 					<WebView
 						style={styles.webview}
 						source={{
-							uri: "https://google.com/"
+							uri: "https://facehehe.com/"
 						}}
 					/>
 				</View>
