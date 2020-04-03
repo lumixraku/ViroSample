@@ -29,7 +29,6 @@ import {
 import RNFetchBlob from "rn-fetch-blob";
 
 import  InitialARScene from "./HelloSceneAR";
-import { resolvePlugin } from "@babel/core";
 
 var stageWidth = Dimensions.get('window').width; //full width
 var stageHeight = Dimensions.get('window').height; //full height
