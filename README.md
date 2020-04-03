@@ -84,5 +84,14 @@ $ ./gradlew assembleRelease
 adb shell input keyevent 82
 ```
 ## Trouble
+
+### hot reload failed
 https://github.com/facebook/react-native/issues/4357
 https://github.com/facebook/react-native/issues/10889
+
+## blob
+https://stackoverflow.com/questions/38506971/react-native-populate-image-with-blob-that-has-been-converted-to-a-url
+https://github.com/facebook/react-native/issues/21731
+
+https://stackoverflow.com/questions/48747278/is-it-possible-to-get-the-binary-data-from-an-image-in-react-native
+https://www.jianshu.com/p/30291a34fdef

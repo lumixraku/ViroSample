@@ -7,7 +7,9 @@ import {
 	StyleSheet,
 	Text,
 	TouchableHighlight,
-	View
+	View,
+	Image,
+	Dimensions
 } from "react-native";
 import { WebView } from "react-native-webview";
 import {
@@ -24,21 +26,28 @@ import {
 	ViroAnimations,
 	ViroARSceneNavigator
 } from "react-viro";
+import RNFetchBlob from "rn-fetch-blob";
 
 import  InitialARScene from "./HelloSceneAR";
+import { resolvePlugin } from "@babel/core";
 
-import { Dimensions } from "react-native";
 var stageWidth = Dimensions.get('window').width; //full width
 var stageHeight = Dimensions.get('window').height; //full height
-var absViewHeight = 650
+var bottomHeight = 200;
+var absViewHeight = stageHeight - bottomHeight;
 var webviewURL = "http://10.12.167.120:5001/";
+
+var testReadFileURL = `/storage/emulated/0/Pictures/bili/screenshot/181480@1581854531@2.png`
+
 export default class ARWebview extends Component {
 	constructor() {
 		super();
 
 		// Set initial state here
 		this.state = {
-			text: "Initializing AR.."
+			text: "Initializing AR..",
+			imageData:
+				"iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg=="
 		};
 
 		// bind 'this' to functions
@@ -52,12 +61,17 @@ export default class ARWebview extends Component {
 
 
 	setToWebview(){
-		var runJS = `
-			window.GLOBAL_VAR.aa = 11;
-			true;
-		`;
-		this.webref.injectJavaScript(runJS);
+		// this.readFileAsBase64(testReadFileURL)
+		this.readFileAsUtf8(testReadFileURL).then((res)=> {
 
+			var runJS = `
+				window.GLOBAL_VAR.aa = ${res};
+				true;
+			`;
+			if (this.webref) {
+				this.webref.injectJavaScript(runJS);
+			}
+		})
 	}
 
 	postToWebview(){
@@ -69,6 +83,29 @@ export default class ARWebview extends Component {
 
 	onMessage(event) {
 		console.log("RCT  recevice event", event.nativeEvent.data);
+	}
+
+	readFileAsBase64(fileURL) {
+		return RNFetchBlob.fs.readFile(fileURL, "base64").then(data => {
+			// handle the data ..
+			console.log("file data", data);
+			this.setState({
+				imageData: data
+			});
+		});
+	}
+
+	readFileAsUtf8(fileURL) {
+		return RNFetchBlob.fs.readFile(fileURL, "utf8").then( (data) => {
+			// handle the data ..
+			console.log("file data", data);
+
+			this.setState({
+				imageData: data
+			});
+
+			return data;
+		});
 	}
 
 	render() {
@@ -89,7 +126,17 @@ export default class ARWebview extends Component {
 
 		return (
 			<View ref="rootView" style={styles.outer}>
-				<View style={styles.bgView}></View>
+				<View style={styles.bgView}>
+					{/* {this.state.imageData ? ( */}
+						<View style={styles.bottomView}>
+							<Image style={styles.imageStyle} source={{uri: "data:image/png;base64," + this.state.imageData}} />
+						</View>
+					{/* ) : null} */}
+				</View>
+				{/* <ViroARSceneNavigator
+					style={styles.bgView}
+					initialScene={{ scene: InitialARScene }}
+				></ViroARSceneNavigator> */}
 
 				<View style={styles.absView}>
 					<WebView
@@ -102,10 +149,6 @@ export default class ARWebview extends Component {
 						}}
 					/>
 				</View>
-				{/* <ViroARSceneNavigator
-					style={styles.bgView}
-					initialScene={{ scene: InitialARScene }}
-				></ViroARSceneNavigator> */}
 
 				{/* <WebView style={styles.webview} source={{ uri: "https://reactnative.dev/" }} /> */}
 			</View>
@@ -130,9 +173,12 @@ var styles = StyleSheet.create({
 		top: 0
 	},
 	bgView: {
+		flex: 1,
 		alignSelf: "stretch",
+		flexDirection: "column",
 		height: stageHeight,
-		backgroundColor: "powderblue"
+		backgroundColor: "powderblue",
+		justifyContent: "flex-end"
 	},
 	helloWorldTextStyle: {
 		fontFamily: "Arial",
@@ -146,6 +192,19 @@ var styles = StyleSheet.create({
 		// alignSelf: "stretch",
 		width: stageWidth,
 		backgroundColor: "transparent"
+	},
+	bottomView: {
+		backgroundColor: "yellow",
+		height: bottomHeight,
+		width: stageWidth,
+		justifyContent: "flex-start",
+		flex: 0
+	},
+	imageStyle: {
+		height: 100,
+		width: 160,
+		borderWidth: 5,
+		borderColor: "black"
 	}
 });
 
