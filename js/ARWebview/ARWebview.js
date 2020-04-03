@@ -62,12 +62,14 @@ export default class ARWebview extends Component {
 	setToWebview(){
 		// this.readFileAsBase64(testReadFileURL)
 		this.readFileAsUtf8(testReadFileURL).then((res)=> {
-
+			res = 'hahah'
 			var runJS = `
-				window.GLOBAL_VAR.aa = ${res};
+				console.log("injected!")
+				window.GLOBAL_VAR.imgdata = "${res}";
 				true;
 			`;
 			if (this.webref) {
+				console.log("injected", runJS)
 				this.webref.injectJavaScript(runJS);
 			}
 		})

@@ -95,3 +95,6 @@ https://github.com/facebook/react-native/issues/21731
 
 https://stackoverflow.com/questions/48747278/is-it-possible-to-get-the-binary-data-from-an-image-in-react-native
 https://www.jianshu.com/p/30291a34fdef
+
+## debug webview
+https://medium.com/@keremcubuk/debugging-webview-on-react-native-879ef029ef09
