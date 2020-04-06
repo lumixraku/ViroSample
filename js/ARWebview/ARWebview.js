@@ -36,7 +36,7 @@ var bottomHeight = 200;
 var absViewHeight = stageHeight - bottomHeight;
 var webviewURL = "http://10.12.167.120:5001/";
 
-var testReadFileURL = `/storage/emulated/0/Pictures/bili/screenshot/181480@1581854531@2.png`
+var testReadFileURL = `/storage/emulated/0/Pictures/Screenshots/Screenshot_20200324-172019.jpg`;
 
 export default class ARWebview extends Component {
 	constructor() {
@@ -62,7 +62,6 @@ export default class ARWebview extends Component {
 	setToWebview(){
 		// this.readFileAsBase64(testReadFileURL)
 		this.readFileAsUtf8(testReadFileURL).then((res)=> {
-			res = 'hahah'
 			var runJS = `
 				console.log("injected!")
 				window.GLOBAL_VAR.imgdata = "${res}";
@@ -89,7 +88,7 @@ export default class ARWebview extends Component {
 	readFileAsBase64(fileURL) {
 		return RNFetchBlob.fs.readFile(fileURL, "base64").then(data => {
 			// handle the data ..
-			console.log("file data", data);
+			// console.log("file data", data);
 			this.setState({
 				imageData: data
 			});

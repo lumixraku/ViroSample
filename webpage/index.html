@@ -29,5 +29,19 @@
     // window.postMessage("jajajajajja")
 
   </script>
+
+  <script>
+  var myImage = document.querySelector('#immmg');
+
+  fetch('./grid_bg.jpg').then(function (response) {
+    return response.blob();
+  }).then(function (myBlob) {
+    console.log(myBlob)
+    var objectURL = URL.createObjectURL(myBlob);
+    myImage.src = objectURL;
+
+  });
+
+  </script>
 </body>
 </html>

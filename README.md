@@ -5,6 +5,8 @@ https://docs.viromedia.com/docs/quick-start
 
 node(12+) watchman react-viro-cli react-native-cli is required.
 
+![image](https://raw.githubusercontent.com/lumixraku/ViroSample/master/webpage/Screenshot1.jpg)
+
 
 ## How to run?
 
